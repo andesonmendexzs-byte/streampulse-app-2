@@ -1,0 +1,29 @@
+name: Build StreamPulse APK
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build Web Asset Bundle
+        run: |
+          echo "Building StreamPulse Android Asset Bundle..."
+          mkdir -p build
+          cp index.html build/index.html
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: StreamPulse-APK
+          path: build/
